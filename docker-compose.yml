@@ -1,0 +1,47 @@
+version: "2"
+services:
+  tania:
+    image: bauidch/tania
+    container_name: tania
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - farming
+    entrypoint:
+      - tania-core
+      - --tania_persistence_engine
+      - "mysql"
+      - --mysql_host
+      - "mysql"
+      - --mysql_username
+      - "root"
+      - --mysql_password
+      - "admin"
+
+  mysql:
+    image: mysql
+    container_name: mysql
+    restart: always
+    ports:
+      - 3306:3306
+    networks:
+      - farming
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: tania
+      MYSQL_USER: tania
+      MYSQL_PASSWORD: tania1234
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    links:
+      - mysql:db
+    ports:
+      - 8081:80
+    networks:
+      - farming
+
+networks:
+  farming:
