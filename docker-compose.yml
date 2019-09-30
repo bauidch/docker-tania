@@ -18,7 +18,6 @@ services:
       - "root"
       - --mysql_password
       - "admin"
-
   mysql:
     image: mysql
     container_name: mysql
